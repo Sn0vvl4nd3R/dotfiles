@@ -1,0 +1,17 @@
+return {
+    { import = "plugins.colorscheme" },
+    { import = "plugins.telescope" },
+    { import = "plugins.treesitter" },
+    { import = "plugins.lsp" },
+    { import = "plugins.cmp" },
+    { import = "plugins.harpoon" },
+    { import = "plugins.ui" },
+    { import = "plugins.editing" },
+    { import = "plugins.formatting" },
+    { import = "plugins.rust" },
+    { import = "plugins.lint" },
+    { import = "plugins.trouble" },
+    { import = "plugins.ui-polish" },
+    { import = "plugins.folds" },
+    { import = "plugins.terminal", },
+}
