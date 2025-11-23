@@ -25,4 +25,4 @@ map({ "v", "x" }, "<A-k>", ":move '<-2<CR>gv=gv", { desc = "Move line up" })
 map("v", "<", "<gv", { desc = "Indent left and reselect" })
 map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
-map("n", "<leader>e", ":Explore<CR>", { desc = "Open file explorer (netrw)" })
+map("n", "<leader>e", function() require("oil").open() end, { desc = "Open file explorer (Oil)" })
