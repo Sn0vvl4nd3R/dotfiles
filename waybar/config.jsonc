@@ -1,0 +1,281 @@
+{
+    /* GLOBAL CONFIGURATION */
+    "layer": "top",
+    "position": "top",
+    "height": 24,
+    "spacing": 0,
+
+    /* MODULES LAYOUT */
+    "modules-left": [
+        "group/workspaces",
+        "custom/caffeine"
+    /*    "custom/screenshot" */
+    /*    "custom/media" */
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "group/tray",
+        "group/connections",
+        "group/audio",
+        "group/hardware",
+        "sway/language",
+        "custom/power"
+    ],
+
+    /* BUILT-IN MODULES */
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "format": "[ {name} ]",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
+    },
+
+    "sway/language": {
+        "format": "[ {short} ]",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
+
+    "clock": {
+        "locale": "en_GB.UTF-8",
+        "interval": 60,
+        "format": "[ <span color='#555566'>{0:%d.%m}</span> <span color='#a8a8b8'><b>{0:%H:%M}</b></span> ]",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down",
+            "on-click-middle": "foot -e calcurse"
+        }
+    },
+
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "[ BAT: {capacity}% ]",
+        "format-charging": "[ CHG: {capacity}% ]",
+        "format-plugged": "[ AC: {capacity}% ]"
+    },
+
+    "pulseaudio": {
+        "format": "[ {volume}% ]",
+        "format-muted": "[ VOL: MUTE ]",
+        "on-click": "pavucontrol"
+    },
+
+    "pulseaudio#mic": {
+        "format": "{format_source}",
+        "format-source": "/ MIC: {volume}%",
+        "format-source-muted": "/ MIC: MUTE",
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-scroll-up": "pactl set-source-volume @DEFAULT_SOURCE@ +1%",
+        "on-scroll-down": "pactl set-source-volume @DEFAULT_SOURCE@ -1%",
+        "tooltip": false
+    },
+
+    "bluetooth": {
+        "format": "[ BT: {status} ]",
+        "format-disabled": "[ BT: OFF ]",
+        "format-connected": "[ BT: {device_alias} ]",
+        "format-connected-battery": "[ BT: {device_alias} {device_battery_percentage}% ]",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "foot bluetui"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10,
+        "show-passive-items": true
+    },
+
+    "network": {
+        "format-wifi": "[ WIFI: {essid} ]",
+        "format-ethernet": "[ ETH: Connected ]",
+        "format-disconnected": "[ NET: OFF ]",
+        "tooltip-format": "{ipaddr}"
+    },
+
+    "cpu": {
+        "format": "/ C: {usage}%",
+        "on-click": "foot -e btop"
+    },
+
+    "memory": {
+        "format": "/ M: {percentage}%",
+        "on-click": "foot -e sh -lc 'watch -n1 \"free -h; echo; ps -eo pid,comm,%mem,rss --sort=-%mem | head -n 25\"'"
+    },
+
+    "temperature": {
+        "format": "/ T: {temperatureC}°C",
+        "on-click": "foot -e sh -lc 'watch -n1 sensors'"
+    },
+
+    /* GROUP MODULES */
+    "group/tray": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/tray-icon",
+            "tray"
+        ],
+        "drawer": {
+            "transition-duration": 200,
+            "children-class": "not-power",
+            "transition-left-to-right": false,
+            "click-to-reveal": true
+        }
+    },
+
+    "group/workspaces": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/focused-workspace",
+            "sway/workspaces"
+        ],
+        "drawer": {
+            "transition-duration": 200,
+            "children-class": "workspace-drawer",
+            "transition-left-to-right": true,
+            "click-to-reveal": true
+        }
+    },
+
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": [
+            "pulseaudio",
+            "pulseaudio#mic"
+        ],
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "audio-drawer",
+            "transition-left-to-right": false
+        }
+    },
+
+    "group/connections": {
+        "orientation": "horizontal",
+        "modules": [
+            "network",
+            "custom/vpn",
+            "bluetooth"
+        ],
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "net-drawer",
+            "transition-left-to-right": false,
+            "click-to-reveal": true
+        }
+    },
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "modules": [
+            "battery",
+            "cpu",
+            "memory",
+            "temperature"
+        ],
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "hw-drawer",
+            "transition-left-to-right": false
+        }
+    },
+
+    /* CUSTOM MODULES */
+    "custom/sep": {
+        "format": " :: ",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/tray-icon": {
+        "format": "[ TRAY ]",
+        "tooltip": false
+    },
+
+    "custom/power": {
+        "format": "[ POWER ]",
+        "tooltip": false,
+        "on-click": "~/.config/sway/power_menu.sh"
+    },
+
+    "custom/caffeine": {
+        "format": "{}",
+        "exec": "if [ -f /tmp/sway-caffeine-mode ]; then echo '{\"text\": \"[ CAFFEINE ]\", \"class\": \"active\"}'; else echo '{\"text\": \"[ NO COFFEE ]\", \"class\": \"inactive\"}'; fi",
+        "return-type": "json",
+        "signal": 8,
+        "interval": 2,
+        "on-click": "~/.config/sway/toggle-caffeine.sh",
+        "tooltip": false
+    },
+
+    "custom/vpn": {
+        "format": "[ VPN: {} ]",
+        "exec": "~/.config/sway/vpn_status.sh",
+        "interval": 60,
+        "on-click": "mullvad connect",
+        "on-click-right": "mullvad disconnect"
+    },
+
+    "custom/notifications": {
+        "format": "{}",
+        "exec": "~/.config/sway/dnd.sh",
+        "on-click": "~/.config/sway/dnd.sh",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 1
+    },
+
+    "custom/media": {
+        "format": "[ {} ]",
+        "exec": "WAYBAR_MEDIA_VIEW=30 WAYBAR_MEDIA_DELAY=0.65 WAYBAR_MEDIA_STEP=3 ~/.config/sway/media_ticker.sh",
+        "tail": true,
+        "exec-on-event": false,
+
+        "on-click": "playerctl -p playerctld play-pause",
+        "on-click-right": "playerctl -p playerctld next",
+        "on-scroll-up": "playerctl -p playerctld volume 0.05+",
+        "on-scroll-down": "playerctl -p playerctld volume 0.05-"
+    },
+
+    "custom/focused-workspace": {
+        "format": "[ {} ]",
+        "exec": "~/.config/sway/focused_ws.sh",
+        "return-type": "plain",
+        "tail": true,
+        "tooltip": false
+    },
+
+    "custom/screenshot": {
+        "format": "[ SHOT ]",
+        "tooltip": false,
+        "on-click": "~/.config/sway/screenshot.sh",
+        "on-click-right": "~/.config/sway/screenshot.sh full",
+        "on-click-middle": "~/.config/sway/screenshot.sh window"
+    }
+}
