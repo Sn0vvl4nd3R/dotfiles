@@ -62,6 +62,8 @@ return {
 							capabilities = capabilities,
 							settings = {
 								Lua = {
+									-- ВКЛЮЧАЕМ ПОДСКАЗКИ ДЛЯ LUA
+									hint = { enable = true },
 									diagnostics = { disable = { "missing-fields" } },
 								},
 							},
@@ -145,6 +147,19 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+					if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+						vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+
+						vim.keymap.set("n", "<leader>th", function()
+							vim.lsp.inlay_hint.enable(
+								not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }),
+								{ bufnr = ev.buf }
+							)
+						end, { buffer = ev.buf, desc = "LSP: [T]oggle Inlay [H]ints" })
+					end
+
 					local map = function(keys, func, desc)
 						vim.keymap.set("n", keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
 					end
