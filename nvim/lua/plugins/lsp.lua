@@ -62,7 +62,6 @@ return {
 							capabilities = capabilities,
 							settings = {
 								Lua = {
-									-- ВКЛЮЧАЕМ ПОДСКАЗКИ ДЛЯ LUA
 									hint = { enable = true },
 									diagnostics = { disable = { "missing-fields" } },
 								},
