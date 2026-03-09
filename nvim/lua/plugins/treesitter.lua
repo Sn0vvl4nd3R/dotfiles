@@ -1,10 +1,25 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
 		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile" },
 		opts = {
-			ensure_installed = { "c", "cpp", "python", "java", "lua", "typst" },
+			ensure_installed = {
+				"c",
+				"cpp",
+				"python",
+				"java",
+				"lua",
+				"typst",
+				"org",
+				"bash",
+				"json",
+				"yaml",
+				"toml",
+				"cmake",
+				"make",
+				"dockerfile",
+			},
 			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = false,

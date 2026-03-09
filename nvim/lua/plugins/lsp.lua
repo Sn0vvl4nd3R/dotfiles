@@ -50,7 +50,17 @@ return {
 			})
 
 			require("mason-lspconfig").setup({
-				ensure_installed = { "clangd", "pyright", "lua_ls", "tinymist" },
+				ensure_installed = {
+					"clangd",
+					"pyright",
+					"lua_ls",
+					"tinymist",
+					"bashls",
+					"jsonls",
+					"yamlls",
+					"neocmake",
+					"dockerls",
+				},
 				handlers = {
 					function(server_name)
 						require("lspconfig")[server_name].setup({
@@ -62,6 +72,7 @@ return {
 							capabilities = capabilities,
 							settings = {
 								Lua = {
+									-- ВКЛЮЧАЕМ ПОДСКАЗКИ ДЛЯ LUA
 									hint = { enable = true },
 									diagnostics = { disable = { "missing-fields" } },
 								},
