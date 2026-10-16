@@ -88,7 +88,7 @@ function zle-line-init zle-keymap-select {
       ;;
     main|viins)
       VIM_MODE="%F{244}[I]%f"
-      print -n "\e[6 q"
+      print -n "\e[2 q"
       ;;
   esac
   zle reset-prompt
