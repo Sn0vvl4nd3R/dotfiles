@@ -1,0 +1,199 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 24,
+  "spacing": 0,
+  "modules-left": [
+    "sway/workspaces",
+    "idle_inhibitor"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "group/systray",
+    "group/connections",
+    "group/audio",
+    "group/hardware",
+    "sway/language",
+    "custom/power"
+  ],
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": " {name} ",
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": []
+    }
+  },
+  "sway/language": {
+    "format": "[ {short} ]",
+    "tooltip": false,
+    "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "[ CAFFEINE: ON ]",
+      "deactivated": "[ CAFFEINE: OFF ]"
+    },
+    "tooltip": false
+  },
+  "clock": {
+    "locale": "en_GB.UTF-8",
+    "interval": 60,
+    "format": "[ <span color='#57606a'>{0:%d.%m}</span> <span color='#000000'><b>{0:%H:%M}</b></span> ]",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#000000'><b>{}</b></span>",
+        "days": "<span color='#212529'>{}</span>",
+        "weeks": "<span color='#57606a'><b>W{}</b></span>",
+        "weekdays": "<span color='#0969da'><b>{}</b></span>",
+        "today": "<span color='#ffffff' background='#cf222e'><b> {} </b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+      "on-click-middle": "foot -e calcurse"
+    }
+  },
+  "pulseaudio": {
+    "format": "[ VOL: {volume}% ]",
+    "format-muted": "[ VOL: MUTE ]",
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "scroll-step": 2,
+    "tooltip": false
+  },
+  "pulseaudio#mic": {
+    "format": "{format_source}",
+    "format-source": "/ MIC: {volume}% ",
+    "format-source-muted": "/ MIC: MUTE ",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SOURCE@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%-",
+    "tooltip": false
+  },
+  "network": {
+    "interval": 10,
+    "format-wifi": "[ WIFI: {essid} ]",
+    "format-ethernet": "[ ETH: ON ]",
+    "format-disconnected": "[ NET: OFF ]",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "bluetooth": {
+    "format": "[ BT: {status} ]",
+    "format-disabled": "[ BT: OFF ]",
+    "format-connected": "[ BT: {device_alias} ]",
+    "format-connected-battery": "[ BT: {device_alias} {device_battery_percentage}% ]",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "foot -e bluetui"
+  },
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "[ BAT: {capacity}% ]",
+    "format-charging": "[ CHG: {capacity}% ]",
+    "format-plugged": "[ AC: {capacity}% ]"
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "/ C: {usage}%",
+    "on-click": "foot -e btop",
+    "tooltip": false
+  },
+  "memory": {
+    "interval": 5,
+    "format": "/ M: {percentage}%",
+    "on-click": "foot -e btop",
+    "tooltip": false
+  },
+  "temperature": {
+    "interval": 5,
+    "critical-threshold": 85,
+    "format": "/ T: {temperatureC}°C ",
+    "on-click": "foot -e sh -c 'watch -n1 sensors'",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 8,
+    "show-passive-items": true
+  },
+  "group/systray": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/tray-icon",
+      "tray"
+    ],
+    "drawer": {
+      "transition-duration": 0,
+      "children-class": "tray-child",
+      "transition-left-to-right": false,
+      "click-to-reveal": true
+    }
+  },
+  "group/connections": {
+    "orientation": "horizontal",
+    "modules": [
+      "network",
+      "bluetooth"
+    ],
+    "drawer": {
+      "transition-duration": 0,
+      "children-class": "net-child",
+      "transition-left-to-right": false,
+      "click-to-reveal": true
+    }
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "pulseaudio#mic"
+    ],
+    "drawer": {
+      "transition-duration": 0,
+      "children-class": "audio-child",
+      "transition-left-to-right": false
+    }
+  },
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": [
+      "battery",
+      "cpu",
+      "memory",
+      "temperature"
+    ],
+    "drawer": {
+      "transition-duration": 0,
+      "children-class": "hw-child",
+      "transition-left-to-right": false
+    }
+  },
+  "custom/tray-icon": {
+    "format": "[ TRAY ]",
+    "tooltip": false
+  },
+  "custom/power": {
+    "format": "[ POWER ]",
+    "tooltip": false,
+    "on-click": "~/.config/sway/power_menu.sh"
+  }
+}
