@@ -1,0 +1,163 @@
+/* ============================================================================
+   ПАЛИТРА PAPER & INK (ЕДИНАЯ С НОУТБУКОМ, TMUX И NEOVIM)
+   ============================================================================ */
+@define-color bg_panel   #eaeef2;
+@define-color bg_pure    #ffffff;
+@define-color bg_hover   #d0d7de;
+@define-color bg_urgent  #cf222e;
+
+@define-color tx_main    #000000;
+@define-color tx_muted   #57606a;
+@define-color tx_dim     #8c959f;
+@define-color tx_invert  #ffffff;
+
+@define-color border_col #afb8c1;
+@define-color accent     #0969da;
+@define-color good       #116329;
+
+/* ============================================================================
+   ГЛОБАЛЬНЫЙ СБРОС (ИСПРАВЛЕН СЕЛЕКТОР *)
+   ============================================================================ */
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    text-shadow: none;
+    transition: none;
+
+    font-family: "Iosevka Term", "Iosevka", monospace;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+window#waybar {
+    background-color: @bg_panel;
+    color: @tx_main;
+    border-bottom: 1px solid @tx_main;
+}
+
+/* ============================================================================
+   ВОРКСПЕЙСЫ И ЗАГОЛОВОК ОКНА NIRI
+   ============================================================================ */
+#workspaces {
+    background-color: @bg_panel;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: @tx_muted;
+    background-color: transparent;
+    border-right: 1px solid @border_col;
+}
+
+#workspaces button:hover {
+    box-shadow: none;
+    text-shadow: none;
+    background-color: @bg_hover;
+    color: @tx_main;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: @tx_main;
+    color: @tx_invert;
+}
+
+#workspaces button.urgent {
+    background-color: @bg_urgent;
+    color: @tx_invert;
+}
+
+#window {
+    padding: 0 10px;
+    color: @tx_muted;
+    font-weight: normal;
+}
+
+/* Скрывать модуль заголовка, если на воркспейсе нет открытых окон */
+window#waybar.empty #window {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+
+/* ============================================================================
+   ЦЕНТРАЛЬНЫЕ ЧАСЫ
+   ============================================================================ */
+#clock {
+    background-color: @bg_pure;
+    color: @tx_main;
+    padding: 0 12px;
+    border-left: 1px solid @tx_main;
+    border-right: 1px solid @tx_main;
+}
+
+/* ============================================================================
+   ПРАВАЯ ТАБЛИЧНАЯ ПАНЕЛЬ СИСТЕМНЫХ МОДУЛЕЙ
+   ============================================================================ */
+#tray,
+#cpu,
+#memory,
+#bluetooth,
+#pulseaudio,
+#language {
+    padding: 0 10px;
+    color: @tx_main;
+    background-color: transparent;
+    border-left: 1px solid @border_col;
+}
+
+#cpu,
+#memory {
+    color: @tx_muted;
+}
+
+#cpu:hover,
+#memory:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#language:hover {
+    background-color: @bg_pure;
+    color: @accent;
+}
+
+#language {
+    background-color: @bg_pure;
+    color: @tx_main;
+    border-left: 1px solid @tx_main;
+}
+
+#bluetooth.connected {
+    color: @good;
+}
+
+#bluetooth.off,
+#bluetooth.disabled,
+#pulseaudio.muted {
+    color: @tx_dim;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+/* ============================================================================
+   TOOLTIPS (КАЛЕНДАРЬ И ПОДСКАЗКИ)
+   ============================================================================ */
+tooltip {
+    background-color: @bg_pure;
+    border: 1px solid @tx_main;
+}
+
+tooltip label {
+    color: @tx_main;
+    padding: 8px 10px;
+}
