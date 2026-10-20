@@ -77,21 +77,18 @@ focus_follows_mouse no
 output * bg #eaeef2 solid_color
 exec_always sh -c '[ -f "$HOME/Pictures/Wallpapers/angel01.jpg" ] && swaymsg output "*" bg "$HOME/Pictures/Wallpapers/angel01.jpg" fill'
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
-exec sh -c 'systemctl --user start --no-block pipewire.service wireplumber.service pipewire-pulse.service 2>/dev/null || true'
+exec sh -c 'pgrep -x pipewire >/dev/null || exec pipewire'
 
 exec_always sh -c 'pkill -x swayidle 2>/dev/null; exec swayidle -w \
     timeout 300 "'"$lock_cmd"'" \
     timeout 600 "swaymsg \"output * power off\"" resume "swaymsg \"output * power on\"" \
     before-sleep "'"$lock_cmd"'"'
 
-exec_always sh -c 'pkill -f autotiling 2>/dev/null; [ -x "$HOME/.local/bin/autotiling" ] && exec "$HOME/.local/bin/autotiling"'
+exec_always sh -c 'pkill -f "[a]utotiling" 2>/dev/null; [ -x "$HOME/.local/bin/autotiling" ] && exec "$HOME/.local/bin/autotiling"'
 
 exec sh -c 'pgrep -x syncthing >/dev/null || exec syncthing --no-browser --no-restart'
-exec sh -c 'pgrep -f focusd >/dev/null || [ -x "$HOME/.local/bin/focusd" ] && exec "$HOME/.local/bin/focusd" --daemon'
 
 for_window [app_id=".*"] inhibit_idle fullscreen
 for_window [class=".*"]  inhibit_idle fullscreen
