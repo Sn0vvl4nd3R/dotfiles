@@ -38,6 +38,7 @@ output "HDMI-A-1" {
     scale 1.0
     transform "normal"
     position x=1080 y=0
+    // position x=1920 y=0
     background-color "#eaeef2"
 }
 
@@ -94,8 +95,12 @@ window-rule {
     open-floating true
 }
 
+spawn-at-startup "dbus-update-activation-environment" "--all"
+spawn-at-startup "pipewire"
 spawn-at-startup "waybar"
 spawn-at-startup "syncthing" "--no-browser" "--no-restart"
+
+spawn-at-startup "niri" "msg" "action" "switch-layout" "1"
 
 spawn-sh-at-startup "[ -f ~/Pictures/Wallpapers/angel01.jpg ] && swaybg -o HDMI-A-1 -m fill -i ~/Pictures/Wallpapers/angel01.jpg"
 spawn-sh-at-startup "[ -f ~/Pictures/Wallpapers/angel02.jpg ] && swaybg -o DP-3 -m fill -i ~/Pictures/Wallpapers/angel02.jpg"
