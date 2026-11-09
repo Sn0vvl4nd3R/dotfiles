@@ -1,0 +1,52 @@
+auto-reload yes
+reload-time 30
+reload-threads 4
+
+
+feed-sort-order firsttag
+article-sort-order date-asc
+
+datetime-format "%Y-%m-%d %H:%M"
+
+show-read-feeds yes
+scrolloff 4
+
+prepopulate-query-feeds yes
+
+
+bind j feedlist,articlelist,urlview down
+bind k feedlist,articlelist,urlview up
+
+bind l feedlist,articlelist open
+bind h articlelist,article,urlview quit
+
+
+browser "flatpak run io.gitlab.librewolf-community --new-tab %u &"
+
+bind of articlelist,article,urlview \
+    set browser "flatpak run org.mozilla.firefox --new-tab %u &" ; \
+    open-in-browser-noninteractively ; \
+    set browser "flatpak run io.gitlab.librewolf-community --new-tab %u &" \
+    -- "Open in Firefox"
+
+bind ol articlelist,article,urlview \
+    open-in-browser-noninteractively \
+    -- "Open in LibreWolf"
+
+bind om articlelist,article,urlview \
+    set browser "flock -n /tmp/newsboat-mpv-$UID.lock \
+        mpv \
+        --no-config \
+        --no-terminal \
+        --profile=fast \
+        --hwdec=auto-safe \
+        --cache=no \
+        --demuxer-readahead-secs=1 \
+        --demuxer-max-bytes=8MiB \
+        --demuxer-max-back-bytes=0 \
+        --ytdl=yes \
+        --ytdl-format='bv*[height<=480][fps<=30]+ba/b[height<=480]/bv*+ba/b' \
+        %u >/dev/null 2>&1 &" ; \
+    open-in-browser-noninteractively ; \
+    set browser "flatpak run io.gitlab.librewolf-community --new-tab %u &" \
+    -- "Play video in mpv"
